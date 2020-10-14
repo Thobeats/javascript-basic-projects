@@ -72,3 +72,80 @@ const menu = [
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
+
+
+const sectionCenter = document.querySelector(".section-center");
+const btnContainer = document.querySelector(".btn-container");
+
+// Display menu on load
+window.addEventListener("DOMContentLoaded", function(){
+  displayButton(menu);
+  displayMenuItems(menu); 
+});
+
+// Dynamically Display buttons function 
+const displayButton = (menuButton) => {
+  const buttons = menuButton.reduce(function(values, item){
+      if(!values.includes(item.category)){
+        values.push(item.category);
+      }
+      return values;
+  }, ['all']);
+
+  //console.log(buttons);
+
+  let displayButtons = buttons.map(function(btn){
+    return `
+    <button class="filter-btn" type="button" data-name=${btn}>${btn}</button>
+    `;
+  });
+
+  displayButtons = displayButtons.join('');
+  btnContainer.innerHTML = displayButtons;
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  //filter Items
+  filterBtns.forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      //console.log(e.currentTarget.dataset.name);
+
+      const category = e.currentTarget.dataset.name;
+      const menuCat = menu.filter(function(menuItem){
+        if(menuItem.category === category){
+          return menuItem;
+        }     
+      });
+
+      //console.log(menuCat);
+    
+      if(category === "all"){
+        displayMenuItems(menu);
+      }else{
+        displayMenuItems(menuCat)
+      }
+    
+    });
+  });
+}
+
+// Display menu function
+const displayMenuItems = (menuItems) => {
+  let displayMenu = menuItems.map(function(item){
+    return `
+        <article class="menu-item">
+          <img src=${item.img} class="photo" alt=${item.title}>
+          <div class="item-info">
+            <header>
+              <h4>${item.title}</h4>
+              <h4 class="price">${item.price}</h4>
+            </header>       
+            <p class="item-text">
+              ${item.desc}
+            </p>     
+          </div>
+        </article>
+    `;
+  });
+  displayMenu = displayMenu.join('');
+  sectionCenter.innerHTML = displayMenu; 
+}
+
