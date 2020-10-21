@@ -31,7 +31,14 @@ const deadline = document.querySelector(".deadline");
 const items = document.querySelectorAll(".deadline-format h4");
 
 //set future date
-let futureDate = new Date(2020,9,26,8,30,0);
+/*let futureDate = new Date(2020,9,26,8,30,0); */
+
+let tempDate = new Date();
+let tempYear = tempDate.getFullYear();
+let tempMonth = tempDate.getMonth();
+let tempDay = tempDate.getDate();
+
+const futureDate = new Date(tempYear, tempMonth, tempDay+10, 8, 30, 0);
 //console.log(futureDate);
 
 const year = futureDate.getFullYear();
@@ -43,7 +50,6 @@ const day = weekdays[futureDate.getDay()];
 
 // Display the full date
 giveaway.textContent= `giveaway ends on ${day}, ${date} ${month} ${year} ${hours}:${mins}am`;
-
 
 //future time in millisecs
 const futureTime = futureDate.getTime();
